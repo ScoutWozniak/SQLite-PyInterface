@@ -1,6 +1,8 @@
 from sqlinterface import *
+import sqlinterface
 
 def main():
+    sqlinterface.printDebugMessage = True
     db = DataBase("crosscountry.db")
 
     # Table holds the name of the table and then a dictionary containing the value name and type
