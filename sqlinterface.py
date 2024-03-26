@@ -9,6 +9,7 @@ class DataBase():
     def __init__(self, dbName : str) -> None:
         self.dbName = dbName
         self.tables = []
+        self.getAllTables()
     
     def initDataBase(self):
         self.conn = sql.connect(self.dbName)
@@ -32,10 +33,23 @@ class DataBase():
         self.conn.close()
 
         self.tables.append(addTable)
+    
+    def getAllTables(self):
+        self.initDataBase()
+        command = """SELECT name FROM sqlite_master
+        WHERE type = 'table';"""
+
+        cur = self.conn.cursor()
+        self.conn.execute(command)
+
+        rows = cur.fetchall()
+
+        print(rows)
+
 
 # Refers to an individual table in SQL
 # Whenever a table is referenced or created in the database these are automatically created
-# 
+# TODO: Seperation between the values of data and the values of the 
 class Table():
     name : str = ""
     values : dict
