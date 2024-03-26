@@ -19,6 +19,8 @@ def main():
 
     AgeLevelEventPlaceTable = Table("AgeLevelEventPlace", {"AgeLevel" : VarChar(10), "UserCode" : VarChar(10), "EventName" : VarChar(20), "Time" : VarChar(6), "Place" : Int(), "Points" : Int()})
     db.createTable(AgeLevelEventPlaceTable)
+
+    db.insertIntoTable(userTable, ["s624881", "McCarney", "Morgan", "Student", "2024", "testdate", "Dallas"])
     
 
 if __name__ == '__main__':

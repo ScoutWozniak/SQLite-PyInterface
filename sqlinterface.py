@@ -13,7 +13,7 @@ class DataBase():
     def __init__(self, dbName : str) -> None:
         self.dbName = dbName
         self.tables = []
-        self.getAllTables()
+        #self.getAllTables()
     
     def initDataBase(self) -> None:
         self.conn = sql.connect(self.dbName)
@@ -46,12 +46,37 @@ class DataBase():
     
     def getAllTables(self) -> None:
         self.initDataBase()
+        self.conn.row_factory = sql.Row
         command = """SELECT name FROM sqlite_master
-        WHERE type = 'table';"""
+        WHERE type = "table";"""
         cur = self.conn.cursor()
         self.conn.execute(command)
         rows = cur.fetchall()
-        print(rows)
+        print(rows[0])
+
+    def insertIntoTable(self, table, values):
+        command = f"INSERT INTO {table.name} VALUES ("
+
+        # for key in table.values:
+        #     TryPrint(key)
+        #     command += key + ", "
+
+        # command = command[:len(command)-2] + ") VALUES ("
+
+        for value in values:
+            TryPrint(value)
+            command += f"""'{value}'""" + ", "
+        
+        command = command[:len(command)-2] + ")"
+
+        TryPrint(command)
+
+        self.initDataBase()
+        self.conn.execute(command)
+
+        self.conn.commit()
+        self.conn.close()
+        
 
 
 # Refers to an individual table in SQL
